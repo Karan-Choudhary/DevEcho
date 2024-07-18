@@ -12,3 +12,13 @@ class Commands:
         partial_command = 'mkdir'
         dir_name = said_text.split('directory')[1].strip()
         return f"{partial_command} {dir_name}"
+    
+    def pkiill_command(self, said_text):
+        partial_command = 'pkill -f'
+        process_name = said_text.split('kill')[1].strip()
+        return f"{partial_command} {process_name}"
+    
+    def rm_command(self, said_text):
+        partial_command = 'rm -r'
+        directory_name = said_text.split('delete')[1].strip()
+        return f"{partial_command} {directory_name}"
