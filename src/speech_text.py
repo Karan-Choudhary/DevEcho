@@ -1,5 +1,11 @@
 # r = sr.Recognizer()
 
+import edge_tts
+import playsound
+import asyncio
+
+VOICE = "en-AU-NatashaNeural"
+
 def recognize_speech_from_mic(recognizer, microphone):
     """Transcribe speech from recorded from `microphone`.
     """
@@ -14,6 +20,17 @@ def recognize_speech_from_mic(recognizer, microphone):
                 return said_text
         except Exception:
             print("Something went wrong! Please try again")
+
+
+def speak(text):
+    loop = asyncio.get_event_loop_policy().get_event_loop()
+    loop.run_until_complete(play_audio(text))
+    playsound.playsound('output.mp3')
+
+
+async def play_audio(text):
+    comm = edge_tts.Communicate(text=text, voice=VOICE)
+    await comm.save('output.mp3')
 
 
 if __name__ == "__main__":

@@ -1,10 +1,9 @@
 import os
-
 import speech_recognition as sr
 import sounddevice
 
-from src.speech_text import recognize_speech_from_mic
 
+from src.speech_text import speak
 from src.command_mapping import COMMAND_MAPPINGS
 from src.command_func_mappings import (COMMAND_FUNC_MAPPINGS, COMMAND_OBJ)
 from utils.commands import Commands
@@ -13,6 +12,7 @@ class Pipeline():
     def __init__(self):
         self.recognizer = sr.Recognizer()
         self.mic = sr.Microphone()
+        self.voice = 'en-AU-NatashaNeural'
 
     def get_matching_command(self, said_command):
         command = ''
@@ -25,18 +25,21 @@ class Pipeline():
     
     def execute_command(self, command):
         os.system(command)
-        print(f"{command=}")
-        print("Command Executed!")
+        # print(f"{command=}")
+        speak('command successfully executed!')
         return
 
     def start_pipeline(self):
-        voice_dict = recognize_speech_from_mic(self.recognizer, self.mic)
-        said_command = voice_dict['alternative'][0]['transcript']
-        print(f"{said_command=}")
-        command = self.get_matching_command(said_command)
-        self.execute_command(command)
-        if said_command == 'exit':
-            exit()
+        said_command = str(input("Enter command: ")).lower()
+        if "wake up" in said_command or "hey" in said_command:
+            speak('I am ready')
+        while True:
+            said_command = str(input("Enter command: ")).lower()
+            print(f"{said_command=}")
+            command = self.get_matching_command(said_command)
+            self.execute_command(command)
+            if said_command == 'exit':
+                exit()
 
 if __name__ == '__main__':
     pipeline_obj = Pipeline()
