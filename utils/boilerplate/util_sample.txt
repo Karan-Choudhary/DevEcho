@@ -1,0 +1,10 @@
+import os
+
+
+class Sample:
+    def __init__(self):
+        ...
+
+
+if __name__ == '__main__':
+    raise Exception("This file not meant to run directly!!!")   

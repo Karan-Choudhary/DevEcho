@@ -1,6 +1,5 @@
 import regex as re
-from utils.ml_template import create_project as ml_project
-from utils.general_project_template import create_project as general_project
+from utils.create_project import start_project
 
 class Commands:
     def __init__(self):
@@ -48,13 +47,11 @@ class Commands:
     def create_ml_template(self, said_text):
         project_name = said_text.split('project')[1].strip().lower()
         project_name = self._preprocess_text(project_name)
-        # partial_command = 'python3 -m utils.ml_template'
-        ml_project(project_name)
+        start_project(project_name, 'ml_project')
         return "echo 'DONE'"
     
     def general_project_template(self, said_text):
         project_name = said_text.split('project')[1].strip().lower()
         project_name = self._preprocess_text(project_name)
-        general_project(project_name)
-        # partial_command = 'python3 -m utils.general_project_template'
+        start_project(project_name, 'general_project')
         return "echo 'DONE'"
