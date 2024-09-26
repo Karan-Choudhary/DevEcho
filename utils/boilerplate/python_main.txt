@@ -1,0 +1,18 @@
+import os
+
+
+class Pipeline:
+    def __init__(self):
+        ...
+
+    def start_pipeline(self):
+        ...
+
+
+def main():
+    pipeline_obj = Pipeline()
+    pipeline_obj.start_pipeline()
+
+
+if __name__ == '__main__':
+    main()
