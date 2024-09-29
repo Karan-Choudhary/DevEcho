@@ -1,27 +1,26 @@
 import os
+
 import speech_recognition as sr
 import sounddevice
 
+from src.speech_text import speak, recognize_speech_from_mic
+from src.command_func_mappings import (DYNAMIC_FUNC_MAPPINGS)
+from utils.command_recognizer import CommandRecognizer
 
-from src.speech_text import speak
-from src.command_mapping import COMMAND_MAPPINGS
-from src.command_func_mappings import (COMMAND_FUNC_MAPPINGS, COMMAND_OBJ)
-from utils.commands import Commands
 
-class Pipeline():
+class Pipeline(CommandRecognizer):
     def __init__(self):
+        super().__init__()
         self.recognizer = sr.Recognizer()
         self.mic = sr.Microphone()
         self.voice = 'en-AU-NatashaNeural'
 
     def get_matching_command(self, said_command):
-        command = ''
-        for key, value in COMMAND_MAPPINGS.items():
-            if key in said_command:
-                func_to_run = COMMAND_FUNC_MAPPINGS[value]
-                command = func_to_run(said_text=said_command)
-                break
-        return command
+        command_idx, command_label = self.predict(said_command)
+        print(f"{command_idx=}")
+        print(f"{command_label=}")
+        func_to_run = DYNAMIC_FUNC_MAPPINGS[command_idx]
+        return func_to_run(said_text=said_command)
     
     def execute_command(self, command):
         os.system(command)
@@ -30,11 +29,16 @@ class Pipeline():
         return
 
     def start_pipeline(self):
-        said_command = str(input("Enter command: ")).lower()
+        voice_dict = recognize_speech_from_mic(self.recognizer, self.mic)
+        said_command = voice_dict['alternative'][0]['transcript']
+        # said_command = str(input("Enter command: ")).lower()
+        print(f"{said_command=}")
         if "wake up" in said_command or "hey" in said_command:
             speak('I am ready')
         while True:
-            said_command = str(input("Enter command: ")).lower()
+            voice_dict = recognize_speech_from_mic(self.recognizer, self.mic)
+            said_command = voice_dict['alternative'][0]['transcript']
+            # said_command = str(input("Enter command: ")).lower()
             print(f"{said_command=}")
             command = self.get_matching_command(said_command)
             self.execute_command(command)
