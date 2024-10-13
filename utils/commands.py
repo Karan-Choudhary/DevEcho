@@ -7,7 +7,8 @@ class Commands:
     
     def _preprocess_text(self, text):
         text = text.lower()
-        text = text.replace('dot', '.').lower()
+        text = re.sub(r'\s?dot\s?', '. ', text)
+        # text = text.replace('dot', '.').lower()
         text = text.replace('underscore', '_')
         text = text.replace(' ', '_')
         text = text.replace(',', '')
@@ -42,7 +43,8 @@ class Commands:
             return "btop"
         elif "htop" in said_text.lower() or "h top" in said_text.lower():
             return "htop"
-        return "Invalid Command"
+        else:
+            return "s-tui"
     
     def create_ml_template(self, said_text):
         project_name = said_text.split('project')[1].strip().lower()
@@ -55,3 +57,11 @@ class Commands:
         project_name = self._preprocess_text(project_name)
         start_project(project_name, 'general_project')
         return "echo 'DONE'"
+    
+    def refactor_code(self, said_text):
+        current_name = said_text.split('old name')[1].split('new name')[0].strip().title()
+        new_name = said_text.split('new name')[1].strip().title()
+        return f'''
+        sed -i 's/{current_name}/{new_name}/g' $(grep -rl --include='*.py' --exclude-dir={{.asst_env,.doc_env,src}} '{current_name}' .)
+        '''
+        

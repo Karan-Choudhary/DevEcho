@@ -7,7 +7,3 @@ COMMAND_MAPPINGS = {
     'machine learning project': 'ml_template',
     'general project': 'general_project_template',
 }
-
-KEYWORD_COMMAND_MAPPINGS = {
-    
-}
