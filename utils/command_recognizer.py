@@ -11,7 +11,9 @@ class CommandRecognizer:
             'kill': 3,
             'show_stats': 4,
             'ml_project': 5,
-            'general_project': 6}
+            'general_project': 6,
+            'refactor': 7
+            }
         
     def tokenize(self, text: str):
         return self.tokenizer(text, return_tensors='pt')

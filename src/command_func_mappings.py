@@ -23,11 +23,13 @@ DYNAMIC_FUNC_MAPPINGS = {
     4: COMMAND_OBJ.show_stats,
     5: COMMAND_OBJ.create_ml_template,
     6: COMMAND_OBJ.general_project_template,
+    7: COMMAND_OBJ.refactor_code,
     'create_directory': COMMAND_OBJ.mkdir_command,
     'create_file': COMMAND_OBJ.touch_command,
     'delete': COMMAND_OBJ.rm_command,
     'kill': COMMAND_OBJ.pkiill_command,
     'show_stats': COMMAND_OBJ.show_stats,
     'ml_project': COMMAND_OBJ.create_ml_template,
-    'general_project': COMMAND_OBJ.general_project_template
+    'general_project': COMMAND_OBJ.general_project_template,
+    'refactor': COMMAND_OBJ.refactor_code
 }
