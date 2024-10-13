@@ -36,14 +36,14 @@ class Pipeline(CommandRecognizer):
         if "wake up" in said_command or "hey" in said_command:
             speak('I am ready')
         while True:
+            if said_command == 'exit':
+                exit()
             voice_dict = recognize_speech_from_mic(self.recognizer, self.mic)
             said_command = voice_dict['alternative'][0]['transcript']
             # said_command = str(input("Enter command: ")).lower()
             print(f"{said_command=}")
             command = self.get_matching_command(said_command)
             self.execute_command(command)
-            if said_command == 'exit':
-                exit()
 
 if __name__ == '__main__':
     pipeline_obj = Pipeline()
